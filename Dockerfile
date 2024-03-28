@@ -4,12 +4,58 @@ ARG SUNODORIV_SDK_VERSION=0.2.0-riv
 ARG MACHINE_EMULATOR_TOOLS_VERSION=0.12.0
 
 
+FROM --platform=linux/riscv64 riv/toolchain:devel as riv-toolchain
+
+
 FROM sunodo/sdk:${SUNODO_SDK_VERSION} as sunodo-riv-sdk
 
 COPY --from=riv-toolchain /root/linux.bin /usr/share/cartesi-machine/images/linux.bin
 
 
-FROM --platform=linux/riscv64 riv/toolchain:devel as riv-toolchain
+FROM sunodo-riv-sdk as sunodo-workspace
+
+RUN <<EOF
+apt-get update
+apt-get install -y --no-install-recommends e2tools xxd jq wget
+rm -rf /var/lib/apt/lists/*
+EOF
+
+RUN curl http://dkolf.de/dkjson-lua/dkjson-2.7.lua -o /usr/share/lua/5.4/dkjson.lua
+
+WORKDIR /opt/workspace
+
+RUN chmod 777 .
+
+RUN <<EOF
+echo '#!/usr/bin/env lua5.4
+
+local json = require("dkjson")
+
+function string.fromhex(str)
+    return (str:gsub('"'"'..'"'"', function (cc)
+        return string.char(tonumber(cc, 16))
+    end))
+end
+
+local function write_be256(value)
+    io.stdout:write(string.rep("\\0", 32 - 8))
+    io.stdout:write(string.pack(">I8", value))
+end
+
+local function encode_input()
+    local j, _, e = json.decode(io.read("*a"))
+    if not j then error(e) end
+    local payload = assert(j.payload, "missing payload")
+    local payload_bin = payload:fromhex()
+    write_be256(32)
+    write_be256(#payload_bin)
+    io.stdout:write(payload_bin)
+end
+
+encode_input()
+' > encode_input.lua
+chmod +x encode_input.lua
+EOF
 
 
 FROM --platform=linux/riscv64 cartesi/python:3.10-slim-jammy as base
@@ -96,7 +142,7 @@ set -e
 
 export ACCEPTED_ERC20_ADDRESS=0xae7f61eCf06C65405560166b259C54031428A9C4
 export PYTHONPATH=${PYTHONPATH}
-cartesapp run app achievements --log-level info
+cartesapp run app achievements --log-level debug
 " > entrypoint.sh && \
 chmod +x entrypoint.sh
 EOF

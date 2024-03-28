@@ -70,7 +70,7 @@ export default function Moments({propos,releaseFunction}:{propos:MomentsPayload,
                         getOutputs(
                         {
                             tags: ['moment_screenshot',moment.cartridge_id,moment.user_address,moment.gameplay_id,`${moment.id}`],
-                            output_type: 'report'
+                            type: 'report'
                         },
                         {cartesiNodeUrl: envClient.CARTESI_NODE_URL}
                     ),

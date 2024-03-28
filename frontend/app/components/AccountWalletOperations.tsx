@@ -21,7 +21,7 @@ function AccountWalletOperations({user_address, reload}:{user_address:string, re
         genericGetOutputs(
             {
                 tags: ["wallet","erc20",envClient.ACCEPTED_TOKEN.toLocaleLowerCase(),user_address],
-                output_type: 'notice'
+                type: 'notice'
             },
             decodeToModel,
             {cartesiNodeUrl: envClient.CARTESI_NODE_URL}

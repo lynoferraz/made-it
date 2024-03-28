@@ -12,7 +12,7 @@ from cartesi.abi import String, Bytes, Bytes32, UInt, Address
 from cartesapp.storage import helpers
 from cartesapp.context import get_metadata
 from cartesapp.input import mutation, query
-from cartesapp.output import add_output, event, emit_event, output
+from cartesapp.output import add_output, event, emit_event, output, index_input
 from cartesapp.utils import str2bytes, hex2bytes
 
 from app.cartridge import Cartridge

@@ -9,7 +9,7 @@ import { useConnectWallet } from "@web3-onboard/react";
 import { gameplays, getOutputs } from "../libs/achievements/lib";
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import RivemuReplayer, { RivemuReplayerGameplay } from "./RivemuReplayer";
-import { cartridge as CartridgeData } from '../libs/app/lib';
+import { cartridge as CartridgeData, Replay, getOutputs as getOutputsApp } from '../libs/app/lib';
 
 const getGameplays = cache(async(id:string, user:string) => {
     let parameters:GameplaysPayload = {};
@@ -31,7 +31,7 @@ const getGameplayLog = cache(async (gameplayId:string) => {
     const gameplayLog:Array<Uint8Array> = await getOutputs(
         {
             tags: [ "replay", gameplayId ],
-            output_type: 'report'
+            type: 'report'
         },
         {cartesiNodeUrl: envClient.CARTESI_NODE_URL}
     );

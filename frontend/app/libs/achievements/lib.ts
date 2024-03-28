@@ -9,7 +9,7 @@ import {
     advanceInput, inspect, 
     AdvanceOutput, InspectOptions, AdvanceInputOptions, GraphqlOptions,
     EtherDepositOptions, ERC20DepositOptions, ERC721DepositOptions,
-    Report as CartesiReport, Notice as CartesiNotice, Voucher as CartesiVoucher, 
+    Report as CartesiReport, Notice as CartesiNotice, Voucher as CartesiVoucher, Input as CartesiInput,
     advanceDAppRelay, advanceERC20Deposit, advanceERC721Deposit, advanceEtherDeposit,
     queryNotice, queryReport, queryVoucher
 } from "cartesi-client";
@@ -20,7 +20,7 @@ import addFormats from "ajv-formats"
 
 import { 
     genericAdvanceInput, genericInspect, IOType, Models,
-    IOData, Output, Event, ContractCall, InspectReport, 
+    IOData, Input, Output, Event, ContractCall, InspectReport, 
     MutationOptions, QueryOptions, 
     CONVENTIONAL_TYPES, decodeToConventionalTypes
 } from "../cartesapp/utils"
@@ -197,7 +197,7 @@ export async function getOutputs(
  * Models Decoders/Exporters
  */
 
-export function decodeToModel(data: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport, modelName: string): any {
+export function decodeToModel(data: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput, modelName: string): any {
     if (modelName == undefined)
         throw new Error("undefined model");
     if (CONVENTIONAL_TYPES.includes(modelName))
@@ -215,108 +215,148 @@ export function exportToModel(data: any, modelName: string): string {
     return exporter(data);
 }
 
-export class CollectMomentPayload extends IOData<ifaces.CollectMomentPayload> { constructor(data: ifaces.CollectMomentPayload, validate: boolean = true) { super(models['CollectMomentPayload'],data,validate); } }
-export function exportToCollectMomentPayload(data: ifaces.CollectMomentPayload): string {
-    const dataToExport: CollectMomentPayload = new CollectMomentPayload(data);
-    return dataToExport.export();
+export class CreateAchievementsPayloadInput extends Input<ifaces.CreateAchievementsPayload> { constructor(data: CartesiInput) { super(models['CreateAchievementsPayload'],data); } }
+export function decodeToCreateAchievementsPayloadInput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): CreateAchievementsPayloadInput {
+    return new CreateAchievementsPayloadInput(output as CartesiInput);
 }
-
-export class ReleaseMomentPayload extends IOData<ifaces.ReleaseMomentPayload> { constructor(data: ifaces.ReleaseMomentPayload, validate: boolean = true) { super(models['ReleaseMomentPayload'],data,validate); } }
-export function exportToReleaseMomentPayload(data: ifaces.ReleaseMomentPayload): string {
-    const dataToExport: ReleaseMomentPayload = new ReleaseMomentPayload(data);
-    return dataToExport.export();
-}
-
 export class CreateAchievementsPayload extends IOData<ifaces.CreateAchievementsPayload> { constructor(data: ifaces.CreateAchievementsPayload, validate: boolean = true) { super(models['CreateAchievementsPayload'],data,validate); } }
 export function exportToCreateAchievementsPayload(data: ifaces.CreateAchievementsPayload): string {
     const dataToExport: CreateAchievementsPayload = new CreateAchievementsPayload(data);
     return dataToExport.export();
 }
 
+export class ReplayAchievementsInput extends Input<ifaces.ReplayAchievements> { constructor(data: CartesiInput) { super(models['ReplayAchievements'],data); } }
+export function decodeToReplayAchievementsInput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): ReplayAchievementsInput {
+    return new ReplayAchievementsInput(output as CartesiInput);
+}
 export class ReplayAchievements extends IOData<ifaces.ReplayAchievements> { constructor(data: ifaces.ReplayAchievements, validate: boolean = true) { super(models['ReplayAchievements'],data,validate); } }
 export function exportToReplayAchievements(data: ifaces.ReplayAchievements): string {
     const dataToExport: ReplayAchievements = new ReplayAchievements(data);
     return dataToExport.export();
 }
 
-export class AchievementPayload extends IOData<ifaces.AchievementPayload> { constructor(data: ifaces.AchievementPayload, validate: boolean = true) { super(models['AchievementPayload'],data,validate); } }
-export function exportToAchievementPayload(data: ifaces.AchievementPayload): string {
-    const dataToExport: AchievementPayload = new AchievementPayload(data);
+export class ReleaseMomentPayloadInput extends Input<ifaces.ReleaseMomentPayload> { constructor(data: CartesiInput) { super(models['ReleaseMomentPayload'],data); } }
+export function decodeToReleaseMomentPayloadInput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): ReleaseMomentPayloadInput {
+    return new ReleaseMomentPayloadInput(output as CartesiInput);
+}
+export class ReleaseMomentPayload extends IOData<ifaces.ReleaseMomentPayload> { constructor(data: ifaces.ReleaseMomentPayload, validate: boolean = true) { super(models['ReleaseMomentPayload'],data,validate); } }
+export function exportToReleaseMomentPayload(data: ifaces.ReleaseMomentPayload): string {
+    const dataToExport: ReleaseMomentPayload = new ReleaseMomentPayload(data);
     return dataToExport.export();
 }
 
-export class MomentsPayload extends IOData<ifaces.MomentsPayload> { constructor(data: ifaces.MomentsPayload, validate: boolean = true) { super(models['MomentsPayload'],data,validate); } }
-export function exportToMomentsPayload(data: ifaces.MomentsPayload): string {
-    const dataToExport: MomentsPayload = new MomentsPayload(data);
+export class CollectMomentPayloadInput extends Input<ifaces.CollectMomentPayload> { constructor(data: CartesiInput) { super(models['CollectMomentPayload'],data); } }
+export function decodeToCollectMomentPayloadInput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): CollectMomentPayloadInput {
+    return new CollectMomentPayloadInput(output as CartesiInput);
+}
+export class CollectMomentPayload extends IOData<ifaces.CollectMomentPayload> { constructor(data: ifaces.CollectMomentPayload, validate: boolean = true) { super(models['CollectMomentPayload'],data,validate); } }
+export function exportToCollectMomentPayload(data: ifaces.CollectMomentPayload): string {
+    const dataToExport: CollectMomentPayload = new CollectMomentPayload(data);
     return dataToExport.export();
 }
 
-export class GameplaysPayload extends IOData<ifaces.GameplaysPayload> { constructor(data: ifaces.GameplaysPayload, validate: boolean = true) { super(models['GameplaysPayload'],data,validate); } }
-export function exportToGameplaysPayload(data: ifaces.GameplaysPayload): string {
-    const dataToExport: GameplaysPayload = new GameplaysPayload(data);
-    return dataToExport.export();
+export class AchievementsPayloadInput extends Input<ifaces.AchievementsPayload> { constructor(data: CartesiInput) { super(models['AchievementsPayload'],data); } }
+export function decodeToAchievementsPayloadInput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): AchievementsPayloadInput {
+    return new AchievementsPayloadInput(output as CartesiInput);
 }
-
-export class CollectValuePayload extends IOData<ifaces.CollectValuePayload> { constructor(data: ifaces.CollectValuePayload, validate: boolean = true) { super(models['CollectValuePayload'],data,validate); } }
-export function exportToCollectValuePayload(data: ifaces.CollectValuePayload): string {
-    const dataToExport: CollectValuePayload = new CollectValuePayload(data);
-    return dataToExport.export();
-}
-
-export class GameplayPayload extends IOData<ifaces.GameplayPayload> { constructor(data: ifaces.GameplayPayload, validate: boolean = true) { super(models['GameplayPayload'],data,validate); } }
-export function exportToGameplayPayload(data: ifaces.GameplayPayload): string {
-    const dataToExport: GameplayPayload = new GameplayPayload(data);
-    return dataToExport.export();
-}
-
 export class AchievementsPayload extends IOData<ifaces.AchievementsPayload> { constructor(data: ifaces.AchievementsPayload, validate: boolean = true) { super(models['AchievementsPayload'],data,validate); } }
 export function exportToAchievementsPayload(data: ifaces.AchievementsPayload): string {
     const dataToExport: AchievementsPayload = new AchievementsPayload(data);
     return dataToExport.export();
 }
 
+export class MomentsPayloadInput extends Input<ifaces.MomentsPayload> { constructor(data: CartesiInput) { super(models['MomentsPayload'],data); } }
+export function decodeToMomentsPayloadInput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): MomentsPayloadInput {
+    return new MomentsPayloadInput(output as CartesiInput);
+}
+export class MomentsPayload extends IOData<ifaces.MomentsPayload> { constructor(data: ifaces.MomentsPayload, validate: boolean = true) { super(models['MomentsPayload'],data,validate); } }
+export function exportToMomentsPayload(data: ifaces.MomentsPayload): string {
+    const dataToExport: MomentsPayload = new MomentsPayload(data);
+    return dataToExport.export();
+}
+
+export class CollectValuePayloadInput extends Input<ifaces.CollectValuePayload> { constructor(data: CartesiInput) { super(models['CollectValuePayload'],data); } }
+export function decodeToCollectValuePayloadInput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): CollectValuePayloadInput {
+    return new CollectValuePayloadInput(output as CartesiInput);
+}
+export class CollectValuePayload extends IOData<ifaces.CollectValuePayload> { constructor(data: ifaces.CollectValuePayload, validate: boolean = true) { super(models['CollectValuePayload'],data,validate); } }
+export function exportToCollectValuePayload(data: ifaces.CollectValuePayload): string {
+    const dataToExport: CollectValuePayload = new CollectValuePayload(data);
+    return dataToExport.export();
+}
+
+export class GameplaysPayloadInput extends Input<ifaces.GameplaysPayload> { constructor(data: CartesiInput) { super(models['GameplaysPayload'],data); } }
+export function decodeToGameplaysPayloadInput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): GameplaysPayloadInput {
+    return new GameplaysPayloadInput(output as CartesiInput);
+}
+export class GameplaysPayload extends IOData<ifaces.GameplaysPayload> { constructor(data: ifaces.GameplaysPayload, validate: boolean = true) { super(models['GameplaysPayload'],data,validate); } }
+export function exportToGameplaysPayload(data: ifaces.GameplaysPayload): string {
+    const dataToExport: GameplaysPayload = new GameplaysPayload(data);
+    return dataToExport.export();
+}
+
+export class GameplayPayloadInput extends Input<ifaces.GameplayPayload> { constructor(data: CartesiInput) { super(models['GameplayPayload'],data); } }
+export function decodeToGameplayPayloadInput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): GameplayPayloadInput {
+    return new GameplayPayloadInput(output as CartesiInput);
+}
+export class GameplayPayload extends IOData<ifaces.GameplayPayload> { constructor(data: ifaces.GameplayPayload, validate: boolean = true) { super(models['GameplayPayload'],data,validate); } }
+export function exportToGameplayPayload(data: ifaces.GameplayPayload): string {
+    const dataToExport: GameplayPayload = new GameplayPayload(data);
+    return dataToExport.export();
+}
+
+export class AchievementPayloadInput extends Input<ifaces.AchievementPayload> { constructor(data: CartesiInput) { super(models['AchievementPayload'],data); } }
+export function decodeToAchievementPayloadInput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): AchievementPayloadInput {
+    return new AchievementPayloadInput(output as CartesiInput);
+}
+export class AchievementPayload extends IOData<ifaces.AchievementPayload> { constructor(data: ifaces.AchievementPayload, validate: boolean = true) { super(models['AchievementPayload'],data,validate); } }
+export function exportToAchievementPayload(data: ifaces.AchievementPayload): string {
+    const dataToExport: AchievementPayload = new AchievementPayload(data);
+    return dataToExport.export();
+}
+
 export class AchievementInfo extends Output<ifaces.AchievementInfo> { constructor(output: CartesiReport | InspectReport) { super(models['AchievementInfo'],output); } }
-export function decodeToAchievementInfo(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport): AchievementInfo {
+export function decodeToAchievementInfo(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): AchievementInfo {
     return new AchievementInfo(output as CartesiReport);
 }
 
 export class AchievementsOutput extends Output<ifaces.AchievementsOutput> { constructor(output: CartesiReport | InspectReport) { super(models['AchievementsOutput'],output); } }
-export function decodeToAchievementsOutput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport): AchievementsOutput {
+export function decodeToAchievementsOutput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): AchievementsOutput {
     return new AchievementsOutput(output as CartesiReport);
 }
 
 export class MomentInfo extends Output<ifaces.MomentInfo> { constructor(output: CartesiReport | InspectReport) { super(models['MomentInfo'],output); } }
-export function decodeToMomentInfo(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport): MomentInfo {
+export function decodeToMomentInfo(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): MomentInfo {
     return new MomentInfo(output as CartesiReport);
 }
 
 export class MomentsOutput extends Output<ifaces.MomentsOutput> { constructor(output: CartesiReport | InspectReport) { super(models['MomentsOutput'],output); } }
-export function decodeToMomentsOutput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport): MomentsOutput {
+export function decodeToMomentsOutput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): MomentsOutput {
     return new MomentsOutput(output as CartesiReport);
 }
 
 export class MomentValues extends Output<ifaces.MomentValues> { constructor(output: CartesiReport | InspectReport) { super(models['MomentValues'],output); } }
-export function decodeToMomentValues(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport): MomentValues {
+export function decodeToMomentValues(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): MomentValues {
     return new MomentValues(output as CartesiReport);
 }
 
 export class GameplayInfo extends Output<ifaces.GameplayInfo> { constructor(output: CartesiReport | InspectReport) { super(models['GameplayInfo'],output); } }
-export function decodeToGameplayInfo(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport): GameplayInfo {
+export function decodeToGameplayInfo(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): GameplayInfo {
     return new GameplayInfo(output as CartesiReport);
 }
 
 export class GameplaysOutput extends Output<ifaces.GameplaysOutput> { constructor(output: CartesiReport | InspectReport) { super(models['GameplaysOutput'],output); } }
-export function decodeToGameplaysOutput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport): GameplaysOutput {
+export function decodeToGameplaysOutput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): GameplaysOutput {
     return new GameplaysOutput(output as CartesiReport);
 }
 
 export class AcquiredAchievement extends Event<ifaces.AcquiredAchievement> { constructor(output: CartesiNotice) { super(models['AcquiredAchievement'],output); } }
-export function decodeToAcquiredAchievement(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport): AcquiredAchievement {
+export function decodeToAcquiredAchievement(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): AcquiredAchievement {
     return new AcquiredAchievement(output as CartesiNotice);
 }
 
 export class CollectedMoment extends Event<ifaces.CollectedMoment> { constructor(output: CartesiNotice) { super(models['CollectedMoment'],output); } }
-export function decodeToCollectedMoment(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport): CollectedMoment {
+export function decodeToCollectedMoment(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): CollectedMoment {
     return new CollectedMoment(output as CartesiNotice);
 }
 
@@ -326,24 +366,11 @@ export function decodeToCollectedMoment(output: CartesiReport | CartesiNotice | 
  */
 
 export const models: Models = {
-    'CollectMomentPayload': {
-        ioType:IOType.mutationPayload,
-        abiTypes:['bytes32', 'bytes32', 'string', 'bytes', 'bytes', 'uint', 'uint'],
-        params:['gameplay_id', 'outcard_hash', 'args', 'in_card', 'log', 'frame', 'user_achievement'],
-        exporter: exportToCollectMomentPayload,
-        validator: ajv.compile<ifaces.CollectMomentPayload>(JSON.parse('{"title": "CollectMomentPayload", "type": "object", "properties": {"gameplay_id": {"type": "string", "format": "binary"}, "outcard_hash": {"type": "string", "format": "binary"}, "args": {"type": "string"}, "in_card": {"type": "string", "format": "binary"}, "log": {"type": "string", "format": "binary"}, "frame": {"type": "integer"}, "user_achievement": {"type": "integer"}}, "required": ["gameplay_id", "outcard_hash", "args", "in_card", "log", "frame", "user_achievement"]}'))
-    },
-    'ReleaseMomentPayload': {
-        ioType:IOType.mutationPayload,
-        abiTypes:['uint'],
-        params:['id'],
-        exporter: exportToReleaseMomentPayload,
-        validator: ajv.compile<ifaces.ReleaseMomentPayload>(JSON.parse('{"title": "ReleaseMomentPayload", "type": "object", "properties": {"id": {"type": "integer"}}, "required": ["id"]}'))
-    },
     'CreateAchievementsPayload': {
         ioType:IOType.mutationPayload,
         abiTypes:['bytes32', 'string', 'string', 'string', 'bytes', 'bytes32', 'string', 'bytes', 'bytes'],
         params:['cartridge_id', 'name', 'description', 'expression', 'icon', 'outcard_hash', 'args', 'in_card', 'log'],
+        decoder: decodeToCreateAchievementsPayloadInput,
         exporter: exportToCreateAchievementsPayload,
         validator: ajv.compile<ifaces.CreateAchievementsPayload>(JSON.parse('{"title": "CreateAchievementsPayload", "type": "object", "properties": {"cartridge_id": {"type": "string", "format": "binary"}, "name": {"type": "string"}, "description": {"type": "string"}, "expression": {"type": "string"}, "icon": {"type": "string", "format": "binary"}, "outcard_hash": {"type": "string", "format": "binary"}, "args": {"type": "string"}, "in_card": {"type": "string", "format": "binary"}, "log": {"type": "string", "format": "binary"}}, "required": ["cartridge_id", "name", "description", "expression", "icon", "outcard_hash", "args", "in_card", "log"]}'))
     },
@@ -351,50 +378,73 @@ export const models: Models = {
         ioType:IOType.mutationPayload,
         abiTypes:['bytes32', 'bytes32', 'string', 'bytes', 'bytes', 'bytes32[]'],
         params:['cartridge_id', 'outcard_hash', 'args', 'in_card', 'log', 'achievements'],
+        decoder: decodeToReplayAchievementsInput,
         exporter: exportToReplayAchievements,
         validator: ajv.compile<ifaces.ReplayAchievements>(JSON.parse('{"title": "ReplayAchievements", "type": "object", "properties": {"cartridge_id": {"type": "string", "format": "binary"}, "outcard_hash": {"type": "string", "format": "binary"}, "args": {"type": "string"}, "in_card": {"type": "string", "format": "binary"}, "log": {"type": "string", "format": "binary"}, "achievements": {"type": "array", "items": {"type": "string", "format": "binary"}}}, "required": ["cartridge_id", "outcard_hash", "args", "in_card", "log", "achievements"]}'))
     },
-    'AchievementPayload': {
-        ioType:IOType.queryPayload,
-        abiTypes:[],
+    'ReleaseMomentPayload': {
+        ioType:IOType.mutationPayload,
+        abiTypes:['uint'],
         params:['id'],
-        exporter: exportToAchievementPayload,
-        validator: ajv.compile<ifaces.AchievementPayload>(JSON.parse('{"title": "AchievementPayload", "type": "object", "properties": {"id": {"type": "string"}}, "required": ["id"]}'))
+        decoder: decodeToReleaseMomentPayloadInput,
+        exporter: exportToReleaseMomentPayload,
+        validator: ajv.compile<ifaces.ReleaseMomentPayload>(JSON.parse('{"title": "ReleaseMomentPayload", "type": "object", "properties": {"id": {"type": "integer"}}, "required": ["id"]}'))
     },
-    'MomentsPayload': {
-        ioType:IOType.queryPayload,
-        abiTypes:[],
-        params:['cartridge_id', 'gameplay_id', 'user_address', 'order_by', 'order_dir', 'page', 'page_size'],
-        exporter: exportToMomentsPayload,
-        validator: ajv.compile<ifaces.MomentsPayload>(JSON.parse('{"title": "MomentsPayload", "type": "object", "properties": {"cartridge_id": {"type": "string"}, "gameplay_id": {"type": "string"}, "user_address": {"type": "string"}, "order_by": {"type": "string"}, "order_dir": {"type": "string"}, "page": {"type": "integer"}, "page_size": {"type": "integer"}}}'))
-    },
-    'GameplaysPayload': {
-        ioType:IOType.queryPayload,
-        abiTypes:[],
-        params:['cartridge_id', 'user_address', 'order_by', 'order_dir', 'page', 'page_size'],
-        exporter: exportToGameplaysPayload,
-        validator: ajv.compile<ifaces.GameplaysPayload>(JSON.parse('{"title": "GameplaysPayload", "type": "object", "properties": {"cartridge_id": {"type": "string"}, "user_address": {"type": "string"}, "order_by": {"type": "string"}, "order_dir": {"type": "string"}, "page": {"type": "integer"}, "page_size": {"type": "integer"}}}'))
-    },
-    'CollectValuePayload': {
-        ioType:IOType.queryPayload,
-        abiTypes:[],
-        params:['id', 'gameplay_id'],
-        exporter: exportToCollectValuePayload,
-        validator: ajv.compile<ifaces.CollectValuePayload>(JSON.parse('{"title": "CollectValuePayload", "type": "object", "properties": {"id": {"type": "integer"}, "gameplay_id": {"type": "string"}}}'))
-    },
-    'GameplayPayload': {
-        ioType:IOType.queryPayload,
-        abiTypes:[],
-        params:['id'],
-        exporter: exportToGameplayPayload,
-        validator: ajv.compile<ifaces.GameplayPayload>(JSON.parse('{"title": "GameplayPayload", "type": "object", "properties": {"id": {"type": "string"}}, "required": ["id"]}'))
+    'CollectMomentPayload': {
+        ioType:IOType.mutationPayload,
+        abiTypes:['bytes32', 'bytes32', 'string', 'bytes', 'bytes', 'uint', 'uint'],
+        params:['gameplay_id', 'outcard_hash', 'args', 'in_card', 'log', 'frame', 'user_achievement'],
+        decoder: decodeToCollectMomentPayloadInput,
+        exporter: exportToCollectMomentPayload,
+        validator: ajv.compile<ifaces.CollectMomentPayload>(JSON.parse('{"title": "CollectMomentPayload", "type": "object", "properties": {"gameplay_id": {"type": "string", "format": "binary"}, "outcard_hash": {"type": "string", "format": "binary"}, "args": {"type": "string"}, "in_card": {"type": "string", "format": "binary"}, "log": {"type": "string", "format": "binary"}, "frame": {"type": "integer"}, "user_achievement": {"type": "integer"}}, "required": ["gameplay_id", "outcard_hash", "args", "in_card", "log", "frame", "user_achievement"]}'))
     },
     'AchievementsPayload': {
         ioType:IOType.queryPayload,
         abiTypes:[],
         params:['cartridge_id', 'user_address', 'name', 'order_by', 'order_dir', 'page', 'page_size', 'player'],
+        decoder: decodeToAchievementsPayloadInput,
         exporter: exportToAchievementsPayload,
         validator: ajv.compile<ifaces.AchievementsPayload>(JSON.parse('{"title": "AchievementsPayload", "type": "object", "properties": {"cartridge_id": {"type": "string"}, "user_address": {"type": "string"}, "name": {"type": "string"}, "order_by": {"type": "string"}, "order_dir": {"type": "string"}, "page": {"type": "integer"}, "page_size": {"type": "integer"}, "player": {"type": "string"}}}'))
+    },
+    'MomentsPayload': {
+        ioType:IOType.queryPayload,
+        abiTypes:[],
+        params:['cartridge_id', 'gameplay_id', 'user_address', 'order_by', 'order_dir', 'page', 'page_size'],
+        decoder: decodeToMomentsPayloadInput,
+        exporter: exportToMomentsPayload,
+        validator: ajv.compile<ifaces.MomentsPayload>(JSON.parse('{"title": "MomentsPayload", "type": "object", "properties": {"cartridge_id": {"type": "string"}, "gameplay_id": {"type": "string"}, "user_address": {"type": "string"}, "order_by": {"type": "string"}, "order_dir": {"type": "string"}, "page": {"type": "integer"}, "page_size": {"type": "integer"}}}'))
+    },
+    'CollectValuePayload': {
+        ioType:IOType.queryPayload,
+        abiTypes:[],
+        params:['id', 'gameplay_id'],
+        decoder: decodeToCollectValuePayloadInput,
+        exporter: exportToCollectValuePayload,
+        validator: ajv.compile<ifaces.CollectValuePayload>(JSON.parse('{"title": "CollectValuePayload", "type": "object", "properties": {"id": {"type": "integer"}, "gameplay_id": {"type": "string"}}}'))
+    },
+    'GameplaysPayload': {
+        ioType:IOType.queryPayload,
+        abiTypes:[],
+        params:['cartridge_id', 'user_address', 'order_by', 'order_dir', 'page', 'page_size'],
+        decoder: decodeToGameplaysPayloadInput,
+        exporter: exportToGameplaysPayload,
+        validator: ajv.compile<ifaces.GameplaysPayload>(JSON.parse('{"title": "GameplaysPayload", "type": "object", "properties": {"cartridge_id": {"type": "string"}, "user_address": {"type": "string"}, "order_by": {"type": "string"}, "order_dir": {"type": "string"}, "page": {"type": "integer"}, "page_size": {"type": "integer"}}}'))
+    },
+    'GameplayPayload': {
+        ioType:IOType.queryPayload,
+        abiTypes:[],
+        params:['id'],
+        decoder: decodeToGameplayPayloadInput,
+        exporter: exportToGameplayPayload,
+        validator: ajv.compile<ifaces.GameplayPayload>(JSON.parse('{"title": "GameplayPayload", "type": "object", "properties": {"id": {"type": "string"}}, "required": ["id"]}'))
+    },
+    'AchievementPayload': {
+        ioType:IOType.queryPayload,
+        abiTypes:[],
+        params:['id'],
+        decoder: decodeToAchievementPayloadInput,
+        exporter: exportToAchievementPayload,
+        validator: ajv.compile<ifaces.AchievementPayload>(JSON.parse('{"title": "AchievementPayload", "type": "object", "properties": {"id": {"type": "string"}}, "required": ["id"]}'))
     },
     'AchievementInfo': {
         ioType:IOType.report,

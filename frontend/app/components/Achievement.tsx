@@ -20,7 +20,7 @@ const getGameplayLog = cache(async (gameplayId:string) => {
     const gameplayLog:Array<Uint8Array> = await getOutputs(
         {
             tags: [ "replay", gameplayId ],
-            output_type: 'report'
+            type: 'report'
         },
         {cartesiNodeUrl: envClient.CARTESI_NODE_URL}
     );

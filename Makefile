@@ -6,6 +6,9 @@ sunodo-riv: sunodo-sdk
 sunodo-sdk:
 	docker build --tag sunodo/sdk:0.2.0-riv --target sunodo-riv-sdk .
 
+sunodo-workspace:
+	docker build --tag sunodo/sdk:0.2.0-riv-ws --target sunodo-workspace .
+
 build:
 	sunodo build
 
