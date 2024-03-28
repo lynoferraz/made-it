@@ -9,7 +9,7 @@ import {
     advanceInput, inspect, 
     AdvanceOutput, InspectOptions, AdvanceInputOptions, GraphqlOptions,
     EtherDepositOptions, ERC20DepositOptions, ERC721DepositOptions,
-    Report as CartesiReport, Notice as CartesiNotice, Voucher as CartesiVoucher, 
+    Report as CartesiReport, Notice as CartesiNotice, Voucher as CartesiVoucher, Input as CartesiInput,
     advanceDAppRelay, advanceERC20Deposit, advanceERC721Deposit, advanceEtherDeposit,
     queryNotice, queryReport, queryVoucher
 } from "cartesi-client";

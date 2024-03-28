@@ -8,7 +8,7 @@ import io
 import pickle
 
 from .protobuf_models import unixfs_pb2, merkle_dag_pb2
-from .settings import STORAGE_PATH
+from cartesapp.storage import Storage
 
 DEFAULT_HEIGHT = 512
 BG_EXTRA_WIDTH = 400
@@ -30,14 +30,14 @@ class ScoreType(Enum):
 
 class GameplayHash:
     cartridge_replays = {}
-    cartridge_replays_filename = f"{STORAGE_PATH}/cartridge_replays.pkl"
+    cartridge_replays_filename = f"{Storage.STORAGE_PATH}/cartridge_replays.pkl"
     def __new__(cls):
         return cls
     
     @classmethod
     def get_cartridge_replays(cls):
         cartridge_replays = {}
-        if STORAGE_PATH is not None:
+        if Storage.STORAGE_PATH is not None:
             if os.path.exists(cls.cartridge_replays_filename):
                 f = open(cls.cartridge_replays_filename, 'rb')
                 cartridge_replays = pickle.load(f)
@@ -48,7 +48,7 @@ class GameplayHash:
 
     @classmethod
     def store_cartridge_replays(cls,cartridge_replays):
-        if STORAGE_PATH is not None:
+        if Storage.STORAGE_PATH is not None:
             with open(cls.cartridge_replays_filename, 'wb') as f:
                 pickle.dump(cartridge_replays, f)
         else:

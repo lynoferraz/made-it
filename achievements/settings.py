@@ -14,7 +14,7 @@ ENABLE_DAPP_RELAY = True # Defaul: False
 ENABLE_WALLET = True # Defaul: False (required to set ENABLE_DAPP_RELAY)
 
 # Path dir to database
-STORAGE_PATH = None # Defaul: False
+STORAGE_PATH = 'data' # Defaul: None
 
 # List of endpoints to disable (useful for cascading)
 DISABLED_ENDPOINTS = ['app.create_scoreboard',"app.clean_scoreboards","app.scoreboard_replay","app.scoreboards","app.scores","app.replay"] # Defaul: []

@@ -288,9 +288,15 @@ def create_cartridge(cartridge_data,**metadata):
     cartridges_path = riv_get_cartridges_path()
     if not os.path.exists(cartridges_path):
         os.makedirs(cartridges_path)
-    cartridge_file = open(f"{cartridges_path}/{data_hash}",'wb')
-    cartridge_file.write(cartridge_data)
-    cartridge_file.close()
+    with open(f"{cartridges_path}/{data_hash}",'wb') as cartridge_file:
+        cartridge_file.write(cartridge_data)
+
+    if AppSettings.rivemu_path is None: # install in rivos
+        rivos_cartridges_path = f"/rivos/{AppSettings.cartridges_path}"
+        if not os.path.exists(rivos_cartridges_path):
+            os.makedirs(rivos_cartridges_path)
+        with open(f"{rivos_cartridges_path}/{data_hash}",'wb') as cartridge_file:
+            cartridge_file.write(cartridge_data)
 
     cartridge_info = riv_get_cartridge_info(data_hash)
     

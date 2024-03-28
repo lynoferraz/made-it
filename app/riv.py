@@ -3,20 +3,18 @@ import os
 from pathlib import Path
 import tempfile
 
-from .settings import AppSettings, STORAGE_PATH
+from .settings import AppSettings
+from cartesapp.storage import Storage
 
 def riv_get_cartridges_path():
-    if AppSettings.rivemu_path is None: # use riv os
-        return f"/rivos/{AppSettings.cartridges_path}"
-    return f"{STORAGE_PATH or '.'}/{AppSettings.cartridges_path}"
+    # if AppSettings.rivemu_path is None: # use riv os
+    #     return f"/rivos/{AppSettings.cartridges_path}"
+    return f"{Storage.STORAGE_PATH or '.'}/{AppSettings.cartridges_path}"
 
 
 def riv_get_cartridge_info(cartridge_id):
     args = ["sqfscat","-st"]
-    if AppSettings.rivemu_path is None: # use riv os
-        args.append(f"/rivos/{AppSettings.cartridges_path}/{cartridge_id}")
-    else:
-        args.append(f"{AppSettings.cartridges_path}/{cartridge_id}")
+    args.append(f"{riv_get_cartridges_path()}/{cartridge_id}")
     args.append("/info.json")
         
     result = subprocess.run(args, capture_output=True, text=True)
@@ -27,10 +25,7 @@ def riv_get_cartridge_info(cartridge_id):
 
 def riv_get_cover(cartridge_id):
     args = ["sqfscat","-no-exit"]
-    if AppSettings.rivemu_path is None: # use riv os
-        args.append(f"/rivos/{AppSettings.cartridges_path}/{cartridge_id}")
-    else:
-        args.append(f"{AppSettings.cartridges_path}/{cartridge_id}")
+    args.append(f"{riv_get_cartridges_path()}/{cartridge_id}")
     args.append("/cover.png")
         
     result = subprocess.run(args, capture_output=True)

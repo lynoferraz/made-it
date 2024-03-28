@@ -9,7 +9,7 @@ import {
     advanceInput, inspect, 
     AdvanceOutput, InspectOptions, AdvanceInputOptions, GraphqlOptions,
     EtherDepositOptions, ERC20DepositOptions, ERC721DepositOptions,
-    Report as CartesiReport, Notice as CartesiNotice, Voucher as CartesiVoucher, 
+    Report as CartesiReport, Notice as CartesiNotice, Voucher as CartesiVoucher, Input as CartesiInput,
     advanceDAppRelay, advanceERC20Deposit, advanceERC721Deposit, advanceEtherDeposit,
     queryNotice, queryReport, queryVoucher
 } from "cartesi-client";
@@ -20,7 +20,7 @@ import addFormats from "ajv-formats"
 
 import { 
     genericAdvanceInput, genericInspect, IOType, Models,
-    IOData, Output, Event, ContractCall, InspectReport, 
+    IOData, Input, Output, Event, ContractCall, InspectReport, 
     MutationOptions, QueryOptions, 
     CONVENTIONAL_TYPES, decodeToConventionalTypes
 } from "../cartesapp/utils"
@@ -163,7 +163,7 @@ export async function getOutputs(
  * Models Decoders/Exporters
  */
 
-export function decodeToModel(data: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport, modelName: string): any {
+export function decodeToModel(data: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput, modelName: string): any {
     if (modelName == undefined)
         throw new Error("undefined model");
     if (CONVENTIONAL_TYPES.includes(modelName))
@@ -181,36 +181,60 @@ export function exportToModel(data: any, modelName: string): string {
     return exporter(data);
 }
 
-export class Replay extends IOData<ifaces.Replay> { constructor(data: ifaces.Replay, validate: boolean = true) { super(models['Replay'],data,validate); } }
-export function exportToReplay(data: ifaces.Replay): string {
-    const dataToExport: Replay = new Replay(data);
-    return dataToExport.export();
+export class RemoveCartridgePayloadInput extends Input<ifaces.RemoveCartridgePayload> { constructor(data: CartesiInput) { super(models['RemoveCartridgePayload'],data); } }
+export function decodeToRemoveCartridgePayloadInput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): RemoveCartridgePayloadInput {
+    return new RemoveCartridgePayloadInput(output as CartesiInput);
 }
-
-export class InserCartridgePayload extends IOData<ifaces.InserCartridgePayload> { constructor(data: ifaces.InserCartridgePayload, validate: boolean = true) { super(models['InserCartridgePayload'],data,validate); } }
-export function exportToInserCartridgePayload(data: ifaces.InserCartridgePayload): string {
-    const dataToExport: InserCartridgePayload = new InserCartridgePayload(data);
-    return dataToExport.export();
-}
-
 export class RemoveCartridgePayload extends IOData<ifaces.RemoveCartridgePayload> { constructor(data: ifaces.RemoveCartridgePayload, validate: boolean = true) { super(models['RemoveCartridgePayload'],data,validate); } }
 export function exportToRemoveCartridgePayload(data: ifaces.RemoveCartridgePayload): string {
     const dataToExport: RemoveCartridgePayload = new RemoveCartridgePayload(data);
     return dataToExport.export();
 }
 
+export class InserCartridgePayloadInput extends Input<ifaces.InserCartridgePayload> { constructor(data: CartesiInput) { super(models['InserCartridgePayload'],data); } }
+export function decodeToInserCartridgePayloadInput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): InserCartridgePayloadInput {
+    return new InserCartridgePayloadInput(output as CartesiInput);
+}
+export class InserCartridgePayload extends IOData<ifaces.InserCartridgePayload> { constructor(data: ifaces.InserCartridgePayload, validate: boolean = true) { super(models['InserCartridgePayload'],data,validate); } }
+export function exportToInserCartridgePayload(data: ifaces.InserCartridgePayload): string {
+    const dataToExport: InserCartridgePayload = new InserCartridgePayload(data);
+    return dataToExport.export();
+}
+
+export class ReplayInput extends Input<ifaces.Replay> { constructor(data: CartesiInput) { super(models['Replay'],data); } }
+export function decodeToReplayInput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): ReplayInput {
+    return new ReplayInput(output as CartesiInput);
+}
+export class Replay extends IOData<ifaces.Replay> { constructor(data: ifaces.Replay, validate: boolean = true) { super(models['Replay'],data,validate); } }
+export function exportToReplay(data: ifaces.Replay): string {
+    const dataToExport: Replay = new Replay(data);
+    return dataToExport.export();
+}
+
+export class CartridgePayloadInput extends Input<ifaces.CartridgePayload> { constructor(data: CartesiInput) { super(models['CartridgePayload'],data); } }
+export function decodeToCartridgePayloadInput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): CartridgePayloadInput {
+    return new CartridgePayloadInput(output as CartesiInput);
+}
 export class CartridgePayload extends IOData<ifaces.CartridgePayload> { constructor(data: ifaces.CartridgePayload, validate: boolean = true) { super(models['CartridgePayload'],data,validate); } }
 export function exportToCartridgePayload(data: ifaces.CartridgePayload): string {
     const dataToExport: CartridgePayload = new CartridgePayload(data);
     return dataToExport.export();
 }
 
+export class CartridgesPayloadInput extends Input<ifaces.CartridgesPayload> { constructor(data: CartesiInput) { super(models['CartridgesPayload'],data); } }
+export function decodeToCartridgesPayloadInput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): CartridgesPayloadInput {
+    return new CartridgesPayloadInput(output as CartesiInput);
+}
 export class CartridgesPayload extends IOData<ifaces.CartridgesPayload> { constructor(data: ifaces.CartridgesPayload, validate: boolean = true) { super(models['CartridgesPayload'],data,validate); } }
 export function exportToCartridgesPayload(data: ifaces.CartridgesPayload): string {
     const dataToExport: CartridgesPayload = new CartridgesPayload(data);
     return dataToExport.export();
 }
 
+export class CartridgePayloadSplittableInput extends Input<ifaces.CartridgePayloadSplittable> { constructor(data: CartesiInput) { super(models['CartridgePayloadSplittable'],data); } }
+export function decodeToCartridgePayloadSplittableInput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): CartridgePayloadSplittableInput {
+    return new CartridgePayloadSplittableInput(output as CartesiInput);
+}
 export class CartridgePayloadSplittable extends IOData<ifaces.CartridgePayloadSplittable> { constructor(data: ifaces.CartridgePayloadSplittable, validate: boolean = true) { super(models['CartridgePayloadSplittable'],data,validate); } }
 export function exportToCartridgePayloadSplittable(data: ifaces.CartridgePayloadSplittable): string {
     const dataToExport: CartridgePayloadSplittable = new CartridgePayloadSplittable(data);
@@ -218,52 +242,52 @@ export function exportToCartridgePayloadSplittable(data: ifaces.CartridgePayload
 }
 
 export class CartridgeInfo extends Output<ifaces.CartridgeInfo> { constructor(output: CartesiReport | InspectReport) { super(models['CartridgeInfo'],output); } }
-export function decodeToCartridgeInfo(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport): CartridgeInfo {
+export function decodeToCartridgeInfo(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): CartridgeInfo {
     return new CartridgeInfo(output as CartesiReport);
 }
 
 export class CartridgesOutput extends Output<ifaces.CartridgesOutput> { constructor(output: CartesiReport | InspectReport) { super(models['CartridgesOutput'],output); } }
-export function decodeToCartridgesOutput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport): CartridgesOutput {
+export function decodeToCartridgesOutput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): CartridgesOutput {
     return new CartridgesOutput(output as CartesiReport);
 }
 
 export class ScoreboardsOutput extends Output<ifaces.ScoreboardsOutput> { constructor(output: CartesiReport | InspectReport) { super(models['ScoreboardsOutput'],output); } }
-export function decodeToScoreboardsOutput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport): ScoreboardsOutput {
+export function decodeToScoreboardsOutput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): ScoreboardsOutput {
     return new ScoreboardsOutput(output as CartesiReport);
 }
 
 export class ScoresOutput extends Output<ifaces.ScoresOutput> { constructor(output: CartesiReport | InspectReport) { super(models['ScoresOutput'],output); } }
-export function decodeToScoresOutput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport): ScoresOutput {
+export function decodeToScoresOutput(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): ScoresOutput {
     return new ScoresOutput(output as CartesiReport);
 }
 
 export class CartridgeInserted extends Event<ifaces.CartridgeInserted> { constructor(output: CartesiNotice) { super(models['CartridgeInserted'],output); } }
-export function decodeToCartridgeInserted(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport): CartridgeInserted {
+export function decodeToCartridgeInserted(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): CartridgeInserted {
     return new CartridgeInserted(output as CartesiNotice);
 }
 
 export class CartridgeRemoved extends Event<ifaces.CartridgeRemoved> { constructor(output: CartesiNotice) { super(models['CartridgeRemoved'],output); } }
-export function decodeToCartridgeRemoved(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport): CartridgeRemoved {
+export function decodeToCartridgeRemoved(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): CartridgeRemoved {
     return new CartridgeRemoved(output as CartesiNotice);
 }
 
 export class ReplayScore extends Event<ifaces.ReplayScore> { constructor(output: CartesiNotice) { super(models['ReplayScore'],output); } }
-export function decodeToReplayScore(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport): ReplayScore {
+export function decodeToReplayScore(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): ReplayScore {
     return new ReplayScore(output as CartesiNotice);
 }
 
 export class ScoreboardCreated extends Event<ifaces.ScoreboardCreated> { constructor(output: CartesiNotice) { super(models['ScoreboardCreated'],output); } }
-export function decodeToScoreboardCreated(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport): ScoreboardCreated {
+export function decodeToScoreboardCreated(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): ScoreboardCreated {
     return new ScoreboardCreated(output as CartesiNotice);
 }
 
 export class ScoreboardRemoved extends Event<ifaces.ScoreboardRemoved> { constructor(output: CartesiNotice) { super(models['ScoreboardRemoved'],output); } }
-export function decodeToScoreboardRemoved(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport): ScoreboardRemoved {
+export function decodeToScoreboardRemoved(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): ScoreboardRemoved {
     return new ScoreboardRemoved(output as CartesiNotice);
 }
 
 export class ScoreboardReplayScore extends Event<ifaces.ScoreboardReplayScore> { constructor(output: CartesiNotice) { super(models['ScoreboardReplayScore'],output); } }
-export function decodeToScoreboardReplayScore(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport): ScoreboardReplayScore {
+export function decodeToScoreboardReplayScore(output: CartesiReport | CartesiNotice | CartesiVoucher | InspectReport | CartesiInput): ScoreboardReplayScore {
     return new ScoreboardReplayScore(output as CartesiNotice);
 }
 
@@ -273,31 +297,35 @@ export function decodeToScoreboardReplayScore(output: CartesiReport | CartesiNot
  */
 
 export const models: Models = {
-    'Replay': {
+    'RemoveCartridgePayload': {
         ioType:IOType.mutationPayload,
-        abiTypes:['bytes32', 'bytes32', 'string', 'bytes', 'bytes', 'string'],
-        params:['cartridge_id', 'outcard_hash', 'args', 'in_card', 'log', 'user_alias'],
-        exporter: exportToReplay,
-        validator: ajv.compile<ifaces.Replay>(JSON.parse('{"title": "Replay", "type": "object", "properties": {"cartridge_id": {"type": "string", "format": "binary"}, "outcard_hash": {"type": "string", "format": "binary"}, "args": {"type": "string"}, "in_card": {"type": "string", "format": "binary"}, "log": {"type": "string", "format": "binary"}, "user_alias": {"type": "string"}}, "required": ["cartridge_id", "outcard_hash", "args", "in_card", "log", "user_alias"]}'))
+        abiTypes:['bytes32'],
+        params:['id'],
+        decoder: decodeToRemoveCartridgePayloadInput,
+        exporter: exportToRemoveCartridgePayload,
+        validator: ajv.compile<ifaces.RemoveCartridgePayload>(JSON.parse('{"title": "RemoveCartridgePayload", "type": "object", "properties": {"id": {"type": "string", "format": "binary"}}, "required": ["id"]}'))
     },
     'InserCartridgePayload': {
         ioType:IOType.mutationPayload,
         abiTypes:['bytes'],
         params:['data'],
+        decoder: decodeToInserCartridgePayloadInput,
         exporter: exportToInserCartridgePayload,
         validator: ajv.compile<ifaces.InserCartridgePayload>(JSON.parse('{"title": "InserCartridgePayload", "type": "object", "properties": {"data": {"type": "string", "format": "binary"}}, "required": ["data"]}'))
     },
-    'RemoveCartridgePayload': {
+    'Replay': {
         ioType:IOType.mutationPayload,
-        abiTypes:['bytes32'],
-        params:['id'],
-        exporter: exportToRemoveCartridgePayload,
-        validator: ajv.compile<ifaces.RemoveCartridgePayload>(JSON.parse('{"title": "RemoveCartridgePayload", "type": "object", "properties": {"id": {"type": "string", "format": "binary"}}, "required": ["id"]}'))
+        abiTypes:['bytes32', 'bytes32', 'string', 'bytes', 'bytes', 'string'],
+        params:['cartridge_id', 'outcard_hash', 'args', 'in_card', 'log', 'user_alias'],
+        decoder: decodeToReplayInput,
+        exporter: exportToReplay,
+        validator: ajv.compile<ifaces.Replay>(JSON.parse('{"title": "Replay", "type": "object", "properties": {"cartridge_id": {"type": "string", "format": "binary"}, "outcard_hash": {"type": "string", "format": "binary"}, "args": {"type": "string"}, "in_card": {"type": "string", "format": "binary"}, "log": {"type": "string", "format": "binary"}, "user_alias": {"type": "string"}}, "required": ["cartridge_id", "outcard_hash", "args", "in_card", "log", "user_alias"]}'))
     },
     'CartridgePayload': {
         ioType:IOType.queryPayload,
         abiTypes:[],
         params:['id'],
+        decoder: decodeToCartridgePayloadInput,
         exporter: exportToCartridgePayload,
         validator: ajv.compile<ifaces.CartridgePayload>(JSON.parse('{"title": "CartridgePayload", "type": "object", "properties": {"id": {"type": "string"}}, "required": ["id"]}'))
     },
@@ -305,6 +333,7 @@ export const models: Models = {
         ioType:IOType.queryPayload,
         abiTypes:[],
         params:['name', 'tags', 'page', 'page_size'],
+        decoder: decodeToCartridgesPayloadInput,
         exporter: exportToCartridgesPayload,
         validator: ajv.compile<ifaces.CartridgesPayload>(JSON.parse('{"title": "CartridgesPayload", "type": "object", "properties": {"name": {"type": "string"}, "tags": {"type": "array", "items": {"type": "string"}}, "page": {"type": "integer"}, "page_size": {"type": "integer"}}}'))
     },
@@ -312,6 +341,7 @@ export const models: Models = {
         ioType:IOType.queryPayload,
         abiTypes:[],
         params:['id', 'part'],
+        decoder: decodeToCartridgePayloadSplittableInput,
         exporter: exportToCartridgePayloadSplittable,
         validator: ajv.compile<ifaces.CartridgePayloadSplittable>(JSON.parse('{"title": "CartridgePayloadSplittable", "type": "object", "properties": {"id": {"type": "string"}, "part": {"type": "integer"}}, "required": ["id"]}'))
     },

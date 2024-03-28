@@ -4,7 +4,7 @@ from pathlib import Path
 import tempfile
 
 from app.settings import AppSettings
-from app.riv import STORAGE_PATH
+
 
 def replay_hist(cartridge_id,log,riv_args,in_card):
     if AppSettings.rivemu_path is None: # use riv os
